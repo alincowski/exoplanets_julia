@@ -1,0 +1,74 @@
+/* Newton-Raphshon (AKA Newton's Method) Rootfinding
+   by Andrew Lincowski
+   for problem set 2, problem 2
+
+   Time-stamp: <ps2.2.cc on Wednesday, 5 September, 2012 at 11:54:18 MST (lincowski)>
+
+   compile with:
+      g++ ps2.2.cc -o2 -o ps2.2
+
+   run as:
+      ./ps2.2
+
+   sample output:
+
+[lincowski@nimoy ps2]$ g++ ps2.2.cc -o2 -o ps2.2
+[lincowski@nimoy ps2]$ ps2.2
+For f(x) = x^3 - 25x^2 + 165x - 275, the roots are: 
+x = 2.55406
+x = 6.94707
+x = 15.4989
+
+
+
+*/
+
+#include <iostream>
+#include <iomanip>
+#include <cmath>
+#include <cstdio>
+
+using namespace std;
+
+double func(double x) {
+
+    return pow(x,3) - 25*pow(x,2) + 165*x - 275;
+
+}
+
+double deriv(double x) {
+
+    double h = 0.000001;
+    return (func(x+h) - func(x) ) / h;
+
+}
+
+double newt(double x) {
+
+
+    double h = -func(x)/deriv(x);
+    double e = fabs(x+h);
+    x = x + h;
+
+    if(fabs(h) > 0.000001) return  newt(x);
+    else return x;
+  
+}
+
+
+main() {
+
+    double x;
+
+    cout << "For f(x) = x^3 - 25x^2 + 165x - 275, the roots are: \n";
+
+    x = 3;
+    cout << "x = " << newt(x) << "\n";
+
+    x = 6;
+    cout << "x = " << newt(x) << "\n";
+
+    x = 16;
+    cout << "x = " << newt(x) << "\n";
+
+}
